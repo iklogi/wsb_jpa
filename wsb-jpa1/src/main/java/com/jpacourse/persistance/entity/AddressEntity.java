@@ -19,6 +19,14 @@ public class AddressEntity {
 
 	private String postalCode;
 
+	// Relacje dwustronne - z PatientEntity i DoctorEntity
+	@OneToOne(mappedBy = "address")
+	private PatientEntity patient;
+
+	@OneToOne(mappedBy = "address")
+	private DoctorEntity doctor;
+
+
 	public Long getId() {
 		return id;
 	}
@@ -59,4 +67,9 @@ public class AddressEntity {
 		this.postalCode = postalCode;
 	}
 
+	public PatientEntity getPatient() { return patient; }
+	public void setPatient(PatientEntity patient) {this. patient = patient;}
+
+	public DoctorEntity getDoctor() { return doctor; }
+	public void setDoctor(DoctorEntity doctor) {this.doctor = doctor;}
 }

@@ -1,8 +1,9 @@
 package com.jpacourse.persistance.entity;
 
 import java.time.LocalDate;
-
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "PATIENT")
@@ -28,6 +29,15 @@ public class PatientEntity {
 
 	@Column(nullable = false)
 	private LocalDate dateOfBirth;
+
+	// Dwustronna relacja z AddressEntity-rodzic
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "address_id", nullable = false)
+	private AddressEntity address;
+
+	//Dwustronna relacja z VisitEntity-rodzic
+	@OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<VisitEntity> visits = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -83,6 +93,20 @@ public class PatientEntity {
 
 	public void setDateOfBirth(LocalDate dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
+	}
+
+	public AddressEntity getAddress() {
+		return address;
+	}
+	public void setAddress(AddressEntity address) {
+		this.address = address;
+	}
+
+	public List<VisitEntity> getVisits() {
+		return visits;
+	}
+	public void setVisits(List<VisitEntity> visits) {
+		this.visits = visits;
 	}
 
 }
